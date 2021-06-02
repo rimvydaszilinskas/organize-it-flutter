@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled2/screens/authentication.dart';
+import 'package:untitled2/screens/event_list.dart';
 import 'package:untitled2/state/authentication.dart';
 
 MultiProvider getApp() {
@@ -32,7 +33,8 @@ class OrganizeItApp extends StatelessWidget {
                 return Column(
                   children: [
                     Consumer<AuthenticationState>(
-                      builder: (ctx, state, child) => Text("What is the state of app? ${state.authenticated}"),
+                      // builder: (ctx, state, child) => Text("What is the state of app? ${state.authenticated}"),
+                      builder: (ctx, state, child) => EventListPage(),
                     ),
                     Consumer<AuthenticationState>(
                       builder: (ctx, state, child) => TextButton(onPressed: () => state.invertState(), child: Text("Invert state")),

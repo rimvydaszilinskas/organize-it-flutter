@@ -19,4 +19,13 @@ class CalendarEvent {
     this.attendees,
   });
 
+  CalendarEvent.fromJson(Map<String, dynamic> json):
+    uuid = json["uuid"],
+    name = json["name"],
+    description = json["description"],
+    emails = json["emails"] {
+    organizer = User.fromJson(json["organizer"]);
+  }
+
+
 }
