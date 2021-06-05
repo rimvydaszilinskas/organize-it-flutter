@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:untitled2/widgets/textFields.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -51,27 +52,14 @@ class _RegisterPageState extends State<RegisterPage> {
     if (response.statusCode != 201) {
       print("gotten ${response.statusCode}");
       print(response.body);
+      // TODO show registration was unsuccessful
     }
 
     print(response.statusCode);
 
     print("$firstName, $lastName, $email, $password");
-  }
 
-  static Widget? GetTextField(ValueChanged<String> onChange, String label, bool? obscure) {
-    if (obscure == null) {
-      obscure = false;
-    }
-    return TextField(
-      obscureText: obscure,
-      onChanged: onChange,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-        labelText: label
-      ),
-    );
+    // TODO show registration was successfull
   }
 
   @override
@@ -94,23 +82,23 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: GetTextField(_handleEmail, "Email", false),
+            child: getTextField(_handleEmail, "Email", false),
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: GetTextField(_handleFirstName, "First Name", false),
+            child: getTextField(_handleFirstName, "First Name", false),
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: GetTextField(_handleLastName, "Last Name", false),
+            child: getTextField(_handleLastName, "Last Name", false),
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: GetTextField(_handleUsername, "Username", false),
+            child: getTextField(_handleUsername, "Username", false),
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: GetTextField(_handlePassword, "Password", true),
+            child: getTextField(_handlePassword, "Password", true),
           ),
           MaterialButton(
             onPressed: _submit,

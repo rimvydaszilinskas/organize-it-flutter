@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled2/state/authentication.dart';
+import 'package:untitled2/widgets/textFields.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,11 +16,11 @@ class _LoginPageState extends State<LoginPage> {
   String password = "";
   bool submitted = false;
 
-  void _usernameController(String username) {
+  void _usernameHandler(String username) {
     this.username = username;
   }
 
-  void _passwordController(String password) {
+  void _passwordHandler(String password) {
     this.password = password;
   }
 
@@ -43,28 +44,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: TextField(
-              onChanged: _usernameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                ),
-                labelText: "Email"
-              ),
-            ),
+            child: getTextField(_usernameHandler, "Email", false),
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: TextField(
-              onChanged: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                ),
-                labelText: "Password",
-              ),
-            ),
+            child: getTextField(_passwordHandler, "Password", true),
           ),
           Consumer<AuthenticationState>(
             builder: (context, state, child) {

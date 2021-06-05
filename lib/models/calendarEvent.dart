@@ -1,3 +1,4 @@
+import 'package:untitled2/models/calendarEventAttendee.dart';
 import 'package:untitled2/models/user.dart';
 import 'package:untitled2/models/userGroup.dart';
 
@@ -24,8 +25,13 @@ class CalendarEvent {
     name = json["name"],
     description = json["description"],
     emails = json["emails"] {
-    organizer = User.fromJson(json["organizer"]);
-  }
+      organizer = User.fromJson(json["organizer"]);
 
+      List<CalendarEventAttendee> _attendees = [];
+      var attendeesJson = json["attendees"];
 
+      attendeesJson.forEach((element) {
+        _attendees.add(CalendarEventAttendee.fromJson(element));
+      });
+    }
 }

@@ -1,5 +1,6 @@
 import 'package:untitled2/models/user.dart';
 
+/// User model for authentication state
 class AuthenticationUser extends User {
   String? token;
 

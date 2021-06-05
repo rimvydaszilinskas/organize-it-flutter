@@ -9,5 +9,10 @@ class CalendarEventAttendee {
 
   CalendarEventAttendee.fromJson(Map<String, dynamic> json):
     uuid = json["uuid"],
-    email = json["email"];
+    email = json["email"] {
+      var _user = json["user"];
+      if (_user != null) {
+        user = User.fromJson(_user);
+      }
+    }
 }

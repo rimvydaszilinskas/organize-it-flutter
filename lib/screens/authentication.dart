@@ -5,6 +5,7 @@ import 'package:untitled2/screens/login.dart';
 import 'package:untitled2/screens/register.dart';
 import 'package:untitled2/state/authentication.dart';
 
+/// Container for both login and register components
 class AuthenticationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -6,23 +6,28 @@ import 'package:untitled2/models/authenticationUser.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:untitled2/models/user.dart';
 
+/// AuthenticationState is the main component for managing user authentication
+/// with the remote API and local storage
 class AuthenticationState extends ChangeNotifier {
   final FlutterSecureStorage storage = FlutterSecureStorage();
   final String SecureStorageAuthTokenKey = "authenticationToken";
 
-  bool authenticated = true;
+  bool authenticated = false;
   AuthenticationUser? user;
   String? errorMessage;
   bool loading = false;
 
   AuthenticationState() {
+    // Try loading the user from local storage if possible
     this._loadUser().then((user) {
+      this.authenticated = true;
       this.user = user;
     }, onError: (error) {
       this.authenticated = false;
     });
   }
 
+  // TODO remove me when not needed
   void invertState() {
     authenticated = !authenticated;
     this.notifyListeners();
@@ -50,7 +55,10 @@ class AuthenticationState extends ChangeNotifier {
     this.invertState();
     return this.user!;
   }
-  
+
+  /// Check local storage for user authentication token and check
+  /// its validity against remote api server
+  /// if token will be invalid, it will throw an exception
   Future<AuthenticationUser> _loadUser() async {
     String? value = await this.storage.read(key: this.SecureStorageAuthTokenKey);
 
@@ -74,6 +82,9 @@ class AuthenticationState extends ChangeNotifier {
     return AuthenticationUser.fromJson(jsonBody);
   }
 
+  /// Try logging in user with email and password
+  /// if unsuccessful an exception is going to be raised and an error message
+  /// on the class will be set
   void attemptLogin(String email, password) {
     var url = Uri.parse("http://35.158.154.65/users/login/");
     var client = http.Client();
@@ -104,5 +115,14 @@ class AuthenticationState extends ChangeNotifier {
       print(error);
       this.setErrorMessage("Error authenticating user");
     });
+  }
+
+  /// Remove tokens from local storage and possibly destroy remote sessions
+  void logout() {
+    this.clearErrorMessage();
+    this.user = null;
+    this.authenticated = false;
+    this.storage.delete(key: this.SecureStorageAuthTokenKey);
+    this.notifyListeners();
   }
 }
