@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 /// Build TextField widget with passed through parameters
 /// Only change the styling here to apply in all input fields
-Widget? getTextField(
-    ValueChanged<String> onChange, String label, bool? obscure) {
+Widget getTextField(ValueChanged<String> onChange, String label, bool? obscure,
+    {maxLines = 1}) {
   if (obscure == null) {
     obscure = false;
   }
@@ -12,11 +12,28 @@ Widget? getTextField(
   return TextField(
     obscureText: obscure,
     onChanged: onChange,
+    maxLines: maxLines,
     decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+        labelText: label),
+  );
+}
+
+Widget getTextFieldContainer(
+    ValueChanged<String> onChange, String label, bool? obscure,
+    {maxLines = 1}) {
+  return Container(
+    padding: EdgeInsets.all(10.0),
+    child: getTextField(onChange, label, obscure, maxLines: maxLines),
+  );
+}
+
+InputDecoration getTextFieldDecorations(String label) {
+  return InputDecoration(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
-      labelText: label
-    ),
-  );
+      labelText: label);
 }
