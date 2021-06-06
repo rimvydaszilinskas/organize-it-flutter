@@ -54,7 +54,7 @@ class _EventListPageState extends State<EventListPage> {
     this.events.forEach((element) {
       widgets.add(
         ListTile(
-          leading: Icon(Icons.storage),
+          leading: Icon(Icons.event),
           title: Text(element.name),
           onTap: () {
             Navigator.push(

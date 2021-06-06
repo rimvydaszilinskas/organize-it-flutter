@@ -37,3 +37,7 @@ InputDecoration getTextFieldDecorations(String label) {
       ),
       labelText: label);
 }
+
+String formatDate(DateTime dt) {
+  return "${dt.year}/${dt.month}/${dt.day} ${dt.hour}:${dt.minute}";
+}

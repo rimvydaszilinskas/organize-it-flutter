@@ -118,10 +118,6 @@ class _CreateEventRouteState extends State<CreateEventRoute> {
     });
   }
 
-  static String formatDate(DateTime dt) {
-    return "${dt.year}/${dt.month}/${dt.day} ${dt.hour}:${dt.minute}";
-  }
-
   Future<CalendarEvent> createEvent(AuthenticationUser user) async {
     print("creating an event");
     var data = this._event.toCreateJson();

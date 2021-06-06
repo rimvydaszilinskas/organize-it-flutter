@@ -9,7 +9,7 @@ class CalendarEvent {
   User? organizer;
   UserGroup? userGroup;
   List<String>? emails;
-  List<User>? attendees;
+  List<CalendarEventAttendee>? attendees;
   DateTime? start;
   DateTime? end;
 
@@ -40,6 +40,8 @@ class CalendarEvent {
       attendeesJson.forEach((element) {
         _attendees.add(CalendarEventAttendee.fromJson(element));
       });
+
+      this.attendees = _attendees;
     }
 
   Map<String, dynamic> toCreateJson() {

@@ -23,7 +23,7 @@ class OrganizeItApp extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return MaterialApp(
-      title: "Organize It",
+      title: "OrganizeIT",
       home: Consumer<AuthenticationState>(
         builder: (context, state, child) {
           // if the state is not authenticated, render authentication widget
@@ -33,7 +33,7 @@ class OrganizeItApp extends StatelessWidget {
           return Scaffold(
             drawer: SideMenu(),
             appBar: AppBar(
-              title: Text("Organize it"),
+              title: Text("OrganizeIT"),
             ),
             body: Consumer<AuthenticationState>(
               builder: (context, state, child) {
