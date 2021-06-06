@@ -9,4 +9,18 @@ class UserGroup {
 
   UserGroup(this.name, this.creator, {this.uuid, this.description, this.users});
 
+  UserGroup.fromJson(Map<String, dynamic> json)
+    : uuid = json["uuid"],
+      name = json["name"],
+      description = json["description"],
+      creator = User.fromJson(json["creator"]) {
+    List<User> users = [];
+    var retrievedUsers = json["users"];
+
+    retrievedUsers.forEach((user) {
+      users.add(User.fromJson(user));
+    });
+
+    this.users = users;
+  }
 }

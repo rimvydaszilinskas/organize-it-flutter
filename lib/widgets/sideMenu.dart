@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled2/routes/profile.dart';
+import 'package:untitled2/routes/userGroups.dart';
 import 'package:untitled2/state/authentication.dart';
 
 /// Side menu of the application
@@ -16,8 +17,9 @@ class SideMenu extends StatelessWidget {
         children: [
           DrawerHeader(
             child: Text(
-              "OrganizeIT !",
+              "OrganizeIT",
               style: TextStyle(color: Colors.white, fontSize: 25),
+              textAlign: TextAlign.left,
             ),
             decoration: BoxDecoration(
               color: Colors.blueAccent,
@@ -37,6 +39,9 @@ class SideMenu extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.group),
             title: Text("User groups"),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => UserGroupsPage()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.group_add),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled2/routes/createEvent.dart';
 import 'package:untitled2/screens/authentication.dart';
-import 'package:untitled2/screens/event_list.dart';
+import 'package:untitled2/screens/eventList.dart';
 import 'package:untitled2/state/authentication.dart';
 import 'package:untitled2/widgets/sideMenu.dart';
 

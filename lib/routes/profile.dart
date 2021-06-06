@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        title: Text("Edit profile"),
         actions: [
           Padding(
               padding: EdgeInsets.only(right: 20.0),
