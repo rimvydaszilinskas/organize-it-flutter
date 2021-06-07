@@ -41,3 +41,18 @@ InputDecoration getTextFieldDecorations(String label) {
 String formatDate(DateTime dt) {
   return "${dt.year}/${dt.month.toString().padLeft(2, "0")}/${dt.day.toString().padLeft(2, "0")} ${dt.hour.toString().padLeft(2, "0")}:${dt.minute.toString().padLeft(2, "0")}";
 }
+
+String formatOnlyDate(DateTime dt) {
+  return "${dt.year}/${dt.month.toString().padLeft(2, "0")}/${dt.day.toString().padLeft(2, "0")}";
+}
+
+Exception buildError(Map<String, dynamic> jsonBody) {
+  var firstErrorKey = jsonBody.keys.first;
+  var message = jsonBody[firstErrorKey];
+  if (message is String) {
+    return Exception("$firstErrorKey - $message");
+  } else if (message is List) {
+    return Exception("$firstErrorKey - ${message[0]}");
+  }
+  return Exception("Unknown error occurred");
+}

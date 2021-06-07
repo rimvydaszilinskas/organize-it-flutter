@@ -6,6 +6,7 @@ class UserGroup {
   String? description;
   User creator;
   List<User>? users;
+  List<String>? emails;
 
   UserGroup(this.name, this.creator, {this.uuid, this.description, this.users});
 
@@ -23,4 +24,13 @@ class UserGroup {
 
     this.users = users;
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": this.name,
+      "description": this.description,
+      "emails": this.emails != null ? this.emails : []
+    };
+  }
+
 }

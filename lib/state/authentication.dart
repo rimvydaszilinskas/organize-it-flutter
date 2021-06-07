@@ -48,6 +48,11 @@ class AuthenticationState extends ChangeNotifier {
     this.notifyListeners();
   }
 
+  void setUser(User user) {
+    this.user = AuthenticationUser.fromUser(user, this.user!.token!);
+    this.notifyListeners();
+  }
+
   User _loginUser(Map<String, dynamic> userData) {
     this.user = AuthenticationUser.fromJson(userData);
 

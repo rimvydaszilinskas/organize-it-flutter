@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled2/routes/invite.dart';
 import 'package:untitled2/routes/profile.dart';
 import 'package:untitled2/routes/userGroups.dart';
 import 'package:untitled2/state/authentication.dart';
@@ -50,6 +51,9 @@ class SideMenu extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.email),
             title: Text("invite friend(s)"),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => InvitePage()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.logout),

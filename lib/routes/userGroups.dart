@@ -13,7 +13,6 @@ class UserGroupsPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _UserGroupsPageState();
   }
-
 }
 
 class _UserGroupsPageState extends State<UserGroupsPage> {
@@ -26,10 +25,7 @@ class _UserGroupsPageState extends State<UserGroupsPage> {
     var response = await client.get(uri, headers: user.getAuthenticationHeaders());
 
     if (response.statusCode != 200) {
-      print("sad face");
-      print(response.body);
-      // TODO show popup?
-      return [];
+      throw Exception("retrieved bad response: ${response.statusCode} with body: ${response.body}");
     }
 
     List<dynamic> data = json.decode(response.body);
@@ -48,16 +44,45 @@ class _UserGroupsPageState extends State<UserGroupsPage> {
     return groups;
   }
 
-  List<Widget> _getGroups(AuthenticationUser user) {
-    this._retrieveGroups(user);
+  List<Widget> _getGroups(AuthenticationUser user, BuildContext context) {
+    this._retrieveGroups(user).then((value) => {}, onError: (error) {
+      print(error);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Error"),
+            content: Text("An error occurred retrieving user groups"),
+            actions: [
+              MaterialButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        }
+      );
+    });
+
     List<Widget> widgets = [];
 
     this.userGroups.forEach((userGroup) {
+      if (widgets.length != 0) {
+        widgets.add(
+          Divider(
+            thickness: 2,
+          )
+        );
+      }
       widgets.add(Text(
-          userGroup.name,
-          style: TextStyle(
-            fontSize: 18
-          ),
+        userGroup.name,
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
       ));
       if(userGroup.users != null){
         userGroup.users!.forEach((user) {
@@ -90,7 +115,7 @@ class _UserGroupsPageState extends State<UserGroupsPage> {
         child: Consumer<AuthenticationState>(
           builder: (context, state, child) {
             return ListView(
-              children: _getGroups(state.user!),
+              children: _getGroups(state.user!, context),
             );
           },
         ),

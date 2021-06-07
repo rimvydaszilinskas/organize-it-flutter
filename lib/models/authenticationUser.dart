@@ -20,6 +20,16 @@ class AuthenticationUser extends User {
     this.token = json["token"];
   }
 
+  AuthenticationUser.fromUser(User user, String token):
+    super(
+        email: user.email,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName
+      ) {
+    this.token = token;
+  }
+
   Map<String, String> getAuthenticationHeaders() {
     return {
       "Authorization": "Token ${this.token}",
