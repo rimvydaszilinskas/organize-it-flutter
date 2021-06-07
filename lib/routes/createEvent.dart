@@ -51,14 +51,21 @@ class _CreateEventRouteState extends State<CreateEventRoute> {
       return list;
     }
 
-    this._event.emails!.forEach((element) {
+    for (int i = 0; i < this._event.emails!.length; i++) {
+      var element = this._event.emails![i];
+
       list.add(
         ListTile(
           leading: Icon(Icons.person),
           title: Text(element),
+          onTap: () {
+            this.setState(() {
+              this._event.emails!.removeAt(i);
+            });
+          },
         ),
       );
-    });
+    }
 
     return list;
   }

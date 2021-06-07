@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled2/models/authenticationUser.dart';
 import 'package:untitled2/models/calendarEvent.dart';
 import 'package:untitled2/routes/createEvent.dart';
+import 'package:untitled2/state/authentication.dart';
 import 'package:untitled2/widgets/textFields.dart';
 
 class EventRoute extends StatelessWidget {
@@ -36,6 +42,40 @@ class EventRoute extends StatelessWidget {
     return attendees;
   }
 
+  void _deleteEvent(BuildContext context, AuthenticationUser user) {
+    var headers = user.getAuthenticationHeaders();
+    var url = Uri.parse("http://35.158.154.65/calendars/events/${this.event.uuid}/");
+    var client = http.Client();
+
+    client.delete(url, headers: headers).then((response) {
+      String titleText = "Success";
+      String content = "${this.event.name} successfully deleted";
+      bool exit = true;
+
+      if (response.statusCode != 204) {
+        Map<String, dynamic> jsonBody = json.decode(response.body);
+        titleText = "Error";
+        content = buildError(jsonBody).toString();
+        exit = false;
+      }
+      showDialog(context: context, builder: (context) => AlertDialog(
+        title: Text(titleText),
+        content: Text(content),
+        actions: [
+          MaterialButton(
+              child: Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                if(exit)
+                  Navigator.of(context).pop();
+              })
+        ],
+      ));
+    }, onError: (error) {
+      print("an error occured ${error}");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -44,6 +84,20 @@ class EventRoute extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(this.event.name),
+        actions: [
+          Consumer<AuthenticationState>(builder: (context, state, widget) {
+            if (this.event.organizer!.uuid != state.user!.uuid) {
+              return Container();
+            }
+            return Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {this._deleteEvent(context, state.user!);},
+                child: Icon(Icons.remove),
+              ),
+            );
+          })
+        ],
       ),
       body: Container(
       height: height,
