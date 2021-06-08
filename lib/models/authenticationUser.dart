@@ -4,29 +4,25 @@ import 'package:untitled2/models/user.dart';
 class AuthenticationUser extends User {
   String? token;
 
-  AuthenticationUser(this.token, {
-    String? email,
-    String? username,
-    String? firstName,
-    String? lastName
-  }): super(
-      email: email,
-      username: username,
-      lastName: lastName,
-      firstName: firstName
-  );
+  AuthenticationUser(this.token,
+      {String? email, String? username, String? firstName, String? lastName})
+      : super(
+            email: email,
+            username: username,
+            lastName: lastName,
+            firstName: firstName);
 
-  AuthenticationUser.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+  AuthenticationUser.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json) {
     this.token = json["token"];
   }
 
-  AuthenticationUser.fromUser(User user, String token):
-    super(
-        email: user.email,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName
-      ) {
+  AuthenticationUser.fromUser(User user, String token)
+      : super(
+            email: user.email,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName) {
     this.token = token;
   }
 
@@ -35,5 +31,4 @@ class AuthenticationUser extends User {
       "Authorization": "Token ${this.token}",
     };
   }
-
 }

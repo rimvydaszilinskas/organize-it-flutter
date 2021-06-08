@@ -22,10 +22,12 @@ class _UserGroupsPageState extends State<UserGroupsPage> {
     var uri = Uri.parse("http://35.158.154.65/users/groups/");
     var client = http.Client();
 
-    var response = await client.get(uri, headers: user.getAuthenticationHeaders());
+    var response =
+        await client.get(uri, headers: user.getAuthenticationHeaders());
 
     if (response.statusCode != 200) {
-      throw Exception("retrieved bad response: ${response.statusCode} with body: ${response.body}");
+      throw Exception(
+          "retrieved bad response: ${response.statusCode} with body: ${response.body}");
     }
 
     List<dynamic> data = json.decode(response.body);
@@ -48,34 +50,31 @@ class _UserGroupsPageState extends State<UserGroupsPage> {
     this._retrieveGroups(user).then((value) => {}, onError: (error) {
       print(error);
       showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Error"),
-            content: Text("An error occurred retrieving user groups"),
-            actions: [
-              MaterialButton(
-                child: Text("Ok"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        }
-      );
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text("An error occurred retrieving user groups"),
+              actions: [
+                MaterialButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
     });
 
     List<Widget> widgets = [];
 
     this.userGroups.forEach((userGroup) {
       if (widgets.length != 0) {
-        widgets.add(
-          Divider(
-            thickness: 2,
-          )
-        );
+        widgets.add(Divider(
+          thickness: 2,
+        ));
       }
       widgets.add(Text(
         userGroup.name,
@@ -84,14 +83,12 @@ class _UserGroupsPageState extends State<UserGroupsPage> {
           fontWeight: FontWeight.w600,
         ),
       ));
-      if(userGroup.users != null){
+      if (userGroup.users != null) {
         userGroup.users!.forEach((user) {
-          widgets.add(
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text(user.getFullName()),
-            )
-          );
+          widgets.add(ListTile(
+            leading: Icon(Icons.person),
+            title: Text(user.getFullName()),
+          ));
         });
       }
     });

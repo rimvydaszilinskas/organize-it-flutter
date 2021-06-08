@@ -3,6 +3,5 @@ class UserCalendar {
 
   UserCalendar(this.name);
 
-  UserCalendar.fromJson(Map<String, dynamic> data):
-    name = data["name"];
+  UserCalendar.fromJson(Map<String, dynamic> data) : name = data["name"];
 }

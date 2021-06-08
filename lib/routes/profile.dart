@@ -78,34 +78,32 @@ class _ProfilePageState extends State<ProfilePage> {
                       showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: Text("Success"),
-                            content: Text("Profile successfully updated"),
-                            actions: [
-                              MaterialButton(
-                                  child: Text("Ok"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  }
-                              )
-                            ],
-                          )
-                      );
+                                title: Text("Success"),
+                                content: Text("Profile successfully updated"),
+                                actions: [
+                                  MaterialButton(
+                                      child: Text("Ok"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      })
+                                ],
+                              ));
                     }, onError: (error) {
                       showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: Text("Error"),
-                            content: Text(error.toString().replaceAll("Exception: ", "")),
-                            actions: [
-                              MaterialButton(
-                                child: Text("Ok"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                }
-                              )
-                            ],
-                          )
-                      );
+                                title: Text("Error"),
+                                content: Text(error
+                                    .toString()
+                                    .replaceAll("Exception: ", "")),
+                                actions: [
+                                  MaterialButton(
+                                      child: Text("Ok"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      })
+                                ],
+                              ));
                     });
                   },
                   child: Icon(Icons.check),

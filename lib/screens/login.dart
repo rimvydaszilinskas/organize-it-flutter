@@ -27,40 +27,39 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: ListView(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              "Sign in",
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.w500,
-                fontSize: 30,
+        padding: EdgeInsets.all(10.0),
+        child: ListView(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                "Sign in",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 30,
+                ),
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: getTextField(_usernameHandler, "Email", false),
-          ),
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: getTextField(_passwordHandler, "Password", true),
-          ),
-          Consumer<AuthenticationState>(
-            builder: (context, state, child) {
-              return MaterialButton(
-                onPressed: () => {state.attemptLogin(username, password)},
-                textColor: Colors.blue,
-                child: Text("Login"),
-              );
-            },
-          )
-        ],
-      )
-    );
+            Container(
+              padding: EdgeInsets.all(10.0),
+              child: getTextField(_usernameHandler, "Email", false),
+            ),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              child: getTextField(_passwordHandler, "Password", true),
+            ),
+            Consumer<AuthenticationState>(
+              builder: (context, state, child) {
+                return MaterialButton(
+                  onPressed: () => {state.attemptLogin(username, password)},
+                  textColor: Colors.blue,
+                  child: Text("Login"),
+                );
+              },
+            )
+          ],
+        ));
   }
 }

@@ -25,7 +25,8 @@ class _EventListPageState extends State<EventListPage> {
     var uri = Uri.parse("http://35.158.154.65/calendars/events/");
     var client = http.Client();
 
-    var response = await client.get(uri, headers: user.getAuthenticationHeaders());
+    var response =
+        await client.get(uri, headers: user.getAuthenticationHeaders());
     List<dynamic> data = json.decode(response.body);
 
     if (response.statusCode != 200) {
@@ -67,15 +68,14 @@ class _EventListPageState extends State<EventListPage> {
         durationDisplay = "${duration.inHours} hours $durationDisplay";
       }
 
-      DateTime currentEventDate = DateTime(element.start!.year, element.start!.month, element.start!.day);
+      DateTime currentEventDate = DateTime(
+          element.start!.year, element.start!.month, element.start!.day);
       if (lastInput != currentEventDate) {
         lastInput = currentEventDate;
         if (widgets.length != 0) {
-          widgets.add(
-            Divider(
-              thickness: 2,
-            )
-          );
+          widgets.add(Divider(
+            thickness: 2,
+          ));
         }
         widgets.add(
           Text(
@@ -88,21 +88,17 @@ class _EventListPageState extends State<EventListPage> {
         );
       }
 
-      widgets.add(
-        ListTile(
-          leading: Icon(Icons.event),
-          title: Text(element.name),
-          subtitle: Text("at $formattedStartDate for $durationDisplay"),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EventRoute(event: element)
-              ),
-            );
-          },
-        )
-      );
+      widgets.add(ListTile(
+        leading: Icon(Icons.event),
+        title: Text(element.name),
+        subtitle: Text("at $formattedStartDate for $durationDisplay"),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EventRoute(event: element)),
+          );
+        },
+      ));
     });
 
     return widgets;
@@ -111,26 +107,24 @@ class _EventListPageState extends State<EventListPage> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Consumer<AuthenticationState>(
-        builder: (context, state, child) {
-          if (!this.loaded && state.authenticated) {
-            _getCalendarEvents(state.user!);
-          }
-          return ListView(
-            children: [
-              MaterialButton(
-                child: Text("Refresh"),
-                onPressed: () {
-                  this.setState(() {
-                    this.loaded = false;
-                  });
-                },
-              ),
-              ..._getEventList(),
-            ],
-          );
+      child: Consumer<AuthenticationState>(builder: (context, state, child) {
+        if (!this.loaded && state.authenticated) {
+          _getCalendarEvents(state.user!);
         }
-      ),
+        return ListView(
+          children: [
+            MaterialButton(
+              child: Text("Refresh"),
+              onPressed: () {
+                this.setState(() {
+                  this.loaded = false;
+                });
+              },
+            ),
+            ..._getEventList(),
+          ],
+        );
+      }),
     );
   }
 }

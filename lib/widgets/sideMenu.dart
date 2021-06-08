@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled2/routes/createUserGroup.dart';
 import 'package:untitled2/routes/invite.dart';
 import 'package:untitled2/routes/password.dart';
 import 'package:untitled2/routes/profile.dart';
@@ -28,35 +29,44 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.person_pin),
-            title: Text("Profile"),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
-            }
-          ),
+              leading: Icon(Icons.person_pin),
+              title: Text("Profile"),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()));
+              }),
           ListTile(
             leading: Icon(Icons.admin_panel_settings),
             title: Text("Change password"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PasswordPage()));
             },
           ),
           ListTile(
             leading: Icon(Icons.group),
             title: Text("User groups"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => UserGroupsPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserGroupsPage()));
             },
           ),
           ListTile(
             leading: Icon(Icons.group_add),
             title: Text("New group"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CreateUserGroupRoute()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.email),
-            title: Text("invite friend(s)"),
+            title: Text("invite friend"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => InvitePage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => InvitePage()));
             },
           ),
           ListTile(

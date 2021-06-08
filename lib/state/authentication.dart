@@ -65,7 +65,8 @@ class AuthenticationState extends ChangeNotifier {
   /// its validity against remote api server
   /// if token will be invalid, it will throw an exception
   Future<AuthenticationUser> _loadUser() async {
-    String? value = await this.storage.read(key: this.SecureStorageAuthTokenKey);
+    String? value =
+        await this.storage.read(key: this.SecureStorageAuthTokenKey);
 
     if (value == null) {
       throw Exception("Storage was empty");
@@ -76,7 +77,8 @@ class AuthenticationState extends ChangeNotifier {
     var url = Uri.parse("http://35.158.154.65/users/self/");
     var client = http.Client();
 
-    var response = await client.get(url, headers: user.getAuthenticationHeaders());
+    var response =
+        await client.get(url, headers: user.getAuthenticationHeaders());
 
     if (response.statusCode != 200) {
       throw Exception("Error authenticating user. Got ${response.statusCode}");
@@ -109,10 +111,7 @@ class AuthenticationState extends ChangeNotifier {
         // We are sure at this point that user is set and token will exist
         this._loginUser(jsonBody);
         this.storage.write(
-            key: this.SecureStorageAuthTokenKey,
-            value: this.user!.token
-        );
-
+            key: this.SecureStorageAuthTokenKey, value: this.user!.token);
       } catch (exception) {
         throw exception;
       }

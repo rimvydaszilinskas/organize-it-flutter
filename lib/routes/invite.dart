@@ -8,7 +8,6 @@ import 'package:untitled2/models/authenticationUser.dart';
 import 'package:untitled2/state/authentication.dart';
 import 'package:untitled2/widgets/textFields.dart';
 
-
 class InvitePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -74,44 +73,45 @@ class _InvitePageState extends State<InvitePage> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Invite friend"),
-        actions: [
-          Consumer<AuthenticationState>(builder: (context, state, widget) {
-            return Padding(
-              padding: EdgeInsets.only(right: 20.0),
-            );
-          })
-        ],
-      ),
-      body: Container(
-        height: height,
-        width: width,
-        padding: EdgeInsets.only(top: 10.0),
-        child: Consumer<AuthenticationState>(builder: (context, state, widget) {
-          return ListView(
-            children: [
-              Padding(padding: EdgeInsets.only(top: 10.0)),
-              ListTile(
-                  leading: Icon(Icons.email),
-                  title: Text("Type in email address below to invite to OrganizeIT:"),
-              ),
-              Padding(padding: EdgeInsets.only(top: 10.0)),
-              TextField(
-                onChanged: (value) {this.email = value;},
-                decoration: getTextFieldDecorations("Email"),
-              ),
-              MaterialButton(
-                onPressed:() { this._sendInvite(context, state.user!);
-              },
-                child: Text("Send"),
-              ),
-            ],
-            );
-        }
-
-      )
-    )
-    );
+        appBar: AppBar(
+          title: Text("Invite friend"),
+          actions: [
+            Consumer<AuthenticationState>(builder: (context, state, widget) {
+              return Padding(
+                padding: EdgeInsets.only(right: 20.0),
+              );
+            })
+          ],
+        ),
+        body: Container(
+            height: height,
+            width: width,
+            padding: EdgeInsets.only(top: 10.0),
+            child: Consumer<AuthenticationState>(
+                builder: (context, state, widget) {
+              return ListView(
+                children: [
+                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                  ListTile(
+                    leading: Icon(Icons.email),
+                    title: Text(
+                        "Type in email address below to invite to OrganizeIT:"),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                  TextField(
+                    onChanged: (value) {
+                      this.email = value;
+                    },
+                    decoration: getTextFieldDecorations("Email"),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      this._sendInvite(context, state.user!);
+                    },
+                    child: Text("Send"),
+                  ),
+                ],
+              );
+            })));
   }
 }

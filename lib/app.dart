@@ -21,14 +21,13 @@ MultiProvider getApp() {
 /// OrganizeItApp is the entry widget of the application
 class OrganizeItApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: "OrganizeIT",
       home: Consumer<AuthenticationState>(
         builder: (context, state, child) {
           // if the state is not authenticated, render authentication widget
-          if (!state.authenticated)
-            return AuthenticationPage();
+          if (!state.authenticated) return AuthenticationPage();
           // otherwise return the application scaffold
           return Scaffold(
             drawer: SideMenu(),
@@ -39,7 +38,7 @@ class OrganizeItApp extends StatelessWidget {
               builder: (context, state, child) {
                 return Column(
                   children: [
-                      EventListPage(),
+                    EventListPage(),
                   ],
                 );
               },
@@ -47,9 +46,9 @@ class OrganizeItApp extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CreateEventRoute())
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateEventRoute()));
               },
               child: Icon(Icons.add),
             ),
