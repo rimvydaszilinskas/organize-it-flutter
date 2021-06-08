@@ -10,7 +10,7 @@ import 'package:untitled2/models/user.dart';
 /// with the remote API and local storage
 class AuthenticationState extends ChangeNotifier {
   final FlutterSecureStorage storage = FlutterSecureStorage();
-  final String SecureStorageAuthTokenKey = "authenticationToken";
+  final String secureStorageAuthTokenKey = "authenticationToken";
 
   bool authenticated = false;
   AuthenticationUser? user;
@@ -66,7 +66,7 @@ class AuthenticationState extends ChangeNotifier {
   /// if token will be invalid, it will throw an exception
   Future<AuthenticationUser> _loadUser() async {
     String? value =
-        await this.storage.read(key: this.SecureStorageAuthTokenKey);
+        await this.storage.read(key: this.secureStorageAuthTokenKey);
 
     if (value == null) {
       throw Exception("Storage was empty");
@@ -111,7 +111,7 @@ class AuthenticationState extends ChangeNotifier {
         // We are sure at this point that user is set and token will exist
         this._loginUser(jsonBody);
         this.storage.write(
-            key: this.SecureStorageAuthTokenKey, value: this.user!.token);
+            key: this.secureStorageAuthTokenKey, value: this.user!.token);
       } catch (exception) {
         throw exception;
       }
@@ -126,7 +126,7 @@ class AuthenticationState extends ChangeNotifier {
     this.clearErrorMessage();
     this.user = null;
     this.authenticated = false;
-    this.storage.delete(key: this.SecureStorageAuthTokenKey);
+    this.storage.delete(key: this.secureStorageAuthTokenKey);
     this.notifyListeners();
   }
 }

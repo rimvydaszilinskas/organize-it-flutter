@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     print("$firstName, $lastName, $email, $password");
 
-    // TODO show registration was successfull
+    // TODO show registration was successful
   }
 
   @override

@@ -77,7 +77,7 @@ class EventRoute extends StatelessWidget {
                 ],
               ));
     }, onError: (error) {
-      print("an error occured ${error}");
+      print("an error occurred $error");
     });
   }
 
