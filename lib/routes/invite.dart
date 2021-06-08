@@ -8,6 +8,7 @@ import 'package:untitled2/models/authenticationUser.dart';
 import 'package:untitled2/state/authentication.dart';
 import 'package:untitled2/widgets/textFields.dart';
 
+
 class InvitePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -17,10 +18,6 @@ class InvitePage extends StatefulWidget {
 
 class _InvitePageState extends State<InvitePage> {
   String email = "";
-
-  void setEmail(String email) {
-    this.email = email;
-  }
 
   void _sendInvite(BuildContext context, AuthenticationUser user) {
     var headers = user.getAuthenticationHeaders();
@@ -32,7 +29,6 @@ class _InvitePageState extends State<InvitePage> {
 
     client.post(url, headers: headers, body: data).then((response) {
       Map<String, dynamic> jsonBody = json.decode(response.body);
-
       if (response.statusCode != 201) {
         showDialog(
             context: context,
@@ -74,6 +70,9 @@ class _InvitePageState extends State<InvitePage> {
   @override
   Widget build(BuildContext context) {
     // TODO build view
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Invite friend"),
@@ -81,18 +80,38 @@ class _InvitePageState extends State<InvitePage> {
           Consumer<AuthenticationState>(builder: (context, state, widget) {
             return Padding(
               padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  this._sendInvite(context, state.user!);
-                },
-                child: Icon(Icons.check),
-              )
-
             );
           })
         ],
       ),
-      body: Text("invite friends"),
+      body: Container(
+        height: height,
+        width: width,
+        padding: EdgeInsets.only(top: 10.0),
+        child: Consumer<AuthenticationState>(builder: (context, state, widget) {
+          return ListView(
+            children: [
+              Padding(padding: EdgeInsets.only(top: 10.0)),
+              ListTile(
+                  leading: Icon(Icons.email),
+                  title: Text("Type in email address below to invite to OrganizeIT:"),
+              ),
+              Padding(padding: EdgeInsets.only(top: 10.0)),
+              TextField(
+                onChanged: (value) {this.email = value;},
+                decoration: getTextFieldDecorations("Email"),
+              ),
+              MaterialButton(
+                onPressed:() { this._sendInvite(context, state.user!);
+              },
+                child: Text("Send"),
+              ),
+            ],
+            );
+        }
+
+      )
+    )
     );
   }
 }

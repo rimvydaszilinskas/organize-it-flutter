@@ -131,6 +131,7 @@ class _CreateEventRouteState extends State<CreateEventRoute> {
     var client = http.Client();
 
     var headers = user.getAuthenticationHeaders();
+    headers["Content-Type"] = "application/json";
 
     var response = await client.post(url, headers: headers, body: requestBody);
 

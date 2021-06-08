@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled2/routes/invite.dart';
+import 'package:untitled2/routes/password.dart';
 import 'package:untitled2/routes/profile.dart';
 import 'package:untitled2/routes/userGroups.dart';
 import 'package:untitled2/state/authentication.dart';
@@ -36,6 +37,9 @@ class SideMenu extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.admin_panel_settings),
             title: Text("Change password"),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordPage()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.group),
