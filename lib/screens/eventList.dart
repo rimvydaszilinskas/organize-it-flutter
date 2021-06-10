@@ -27,13 +27,29 @@ class _EventListPageState extends State<EventListPage> {
 
     var response =
         await client.get(uri, headers: user.getAuthenticationHeaders());
-    List<dynamic> data = json.decode(response.body);
 
     if (response.statusCode != 200) {
       print("bad response ${response.statusCode}");
-      // TODO display error
+      var data = json.decode(response.body);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text(buildError(data).toString()),
+              actions: [
+                MaterialButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
       return;
     }
+    List<dynamic> data = json.decode(response.body);
 
     var events = <CalendarEvent>[];
     var mappedData = data.map((e) => e as Map<String, dynamic>);

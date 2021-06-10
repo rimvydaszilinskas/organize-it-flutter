@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -37,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
     this.username = username;
   }
 
-  void _submit() async {
+  void _submit(BuildContext context) async {
     var uri = Uri.parse("http://35.158.154.65/users/register/");
     var client = http.Client();
 
@@ -51,15 +53,43 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (response.statusCode != 201) {
       print("gotten ${response.statusCode}");
-      print(response.body);
-      // TODO show registration was unsuccessful
+      var data = json.decode(response.body);
+
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text(buildError(data).toString()),
+              actions: [
+                MaterialButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+      return;
     }
 
-    print(response.statusCode);
-
-    print("$firstName, $lastName, $email, $password");
-
-    // TODO show registration was successful
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Success"),
+            content: Text("Registration successful"),
+            actions: [
+              MaterialButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 
   @override
@@ -101,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: getTextField(_handlePassword, "Password", true),
           ),
           MaterialButton(
-            onPressed: _submit,
+            onPressed: () {this._submit(context);},
             textColor: Colors.blue,
             child: Text("Register"),
           )

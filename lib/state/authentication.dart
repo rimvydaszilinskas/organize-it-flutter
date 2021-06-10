@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:untitled2/models/authenticationUser.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -27,7 +29,6 @@ class AuthenticationState extends ChangeNotifier {
     });
   }
 
-  // TODO remove me when not needed
   void invertState() {
     authenticated = !authenticated;
     this.notifyListeners();
@@ -92,7 +93,7 @@ class AuthenticationState extends ChangeNotifier {
   /// Try logging in user with email and password
   /// if unsuccessful an exception is going to be raised and an error message
   /// on the class will be set
-  void attemptLogin(String email, password) {
+  void attemptLogin(String email, password, BuildContext context) {
     var url = Uri.parse("http://35.158.154.65/users/login/");
     var client = http.Client();
 
@@ -104,8 +105,7 @@ class AuthenticationState extends ChangeNotifier {
         Map<String, dynamic> jsonBody = json.decode(response.body);
 
         if (response.statusCode != 201) {
-          this.setErrorMessage("Wrong/bad credentials provided");
-          return;
+          throw Exception();
         }
 
         // We are sure at this point that user is set and token will exist
@@ -113,10 +113,24 @@ class AuthenticationState extends ChangeNotifier {
         this.storage.write(
             key: this.secureStorageAuthTokenKey, value: this.user!.token);
       } catch (exception) {
-        throw exception;
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("Error"),
+                content: Text("Incorrect credentials"),
+                actions: [
+                  MaterialButton(
+                    child: Text("Ok"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            });
       }
     }, onError: (error) {
-      print(error);
       this.setErrorMessage("Error authenticating user");
     });
   }

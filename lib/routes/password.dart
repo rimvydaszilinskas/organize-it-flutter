@@ -32,11 +32,11 @@ class _PasswordPageState extends State<PasswordPage> {
     };
 
     client.patch(uri, headers: headers, body: body).then((response) {
-      Map<String, dynamic> jsonBody = json.decode(response.body);
       String message = "Password change successfully";
       bool exit = true;
 
       if (response.statusCode != 204) {
+        Map<String, dynamic> jsonBody = json.decode(response.body);
         exit = false;
         message = buildError(jsonBody).toString();
       }
@@ -59,6 +59,7 @@ class _PasswordPageState extends State<PasswordPage> {
     }, onError: (error) {
       print(error);
     });
+    return;
   }
 
   @override
@@ -85,6 +86,7 @@ class _PasswordPageState extends State<PasswordPage> {
             TextField(
               controller: _currentPasswordController,
               decoration: getTextFieldDecorations("current password"),
+              obscureText: true,
             ),
             Padding(padding: EdgeInsets.only(top: 10.0)),
             ListTile(
@@ -95,11 +97,13 @@ class _PasswordPageState extends State<PasswordPage> {
             TextField(
               controller: _newPasswordController,
               decoration: getTextFieldDecorations("new password"),
+              obscureText: true,
             ),
             Padding(padding: EdgeInsets.only(top: 10.0)),
             TextField(
               controller: _repeatNewPasswordController,
               decoration: getTextFieldDecorations("repeat new password"),
+              obscureText: true,
             ),
             Consumer<AuthenticationState>(
               builder: (context, state, widget) {

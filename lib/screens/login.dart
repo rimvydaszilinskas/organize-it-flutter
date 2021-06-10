@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Container(
               padding: EdgeInsets.all(10.0),
-              child: getTextField(_usernameHandler, "Email", false),
+              child: getTextField(_usernameHandler, "Emwail", false),
             ),
             Container(
               padding: EdgeInsets.all(10.0),
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
             Consumer<AuthenticationState>(
               builder: (context, state, child) {
                 return MaterialButton(
-                  onPressed: () => {state.attemptLogin(username, password)},
+                  onPressed: () {state.attemptLogin(username, password, context);},
                   textColor: Colors.blue,
                   child: Text("Login"),
                 );

@@ -68,7 +68,6 @@ class _InvitePageState extends State<InvitePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO build view
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
